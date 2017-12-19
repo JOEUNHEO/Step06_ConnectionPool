@@ -11,11 +11,11 @@ import test.board.dto.BoardDto;
 import test.util.DbcpBean;
 
 public class BoardDao {
-	private static BoardDao dao;
+	private static BoardDao dao;//싱글톤으로 만드는 작업1
 	
-	private BoardDao() {}
+	private BoardDao() {}//싱글톤으로 만드는 작업2
 	
-	public static BoardDao getInstance() {
+	public static BoardDao getInstance() {//싱글톤으로 만드는 작업3
 		if(dao == null) {
 			dao = new BoardDao();
 		}
@@ -32,7 +32,7 @@ public class BoardDao {
 
 		try {
 			//Connection 객체의 참조값 얻어오기
-			conn = new DbcpBean().getConn();
+			conn = new DbcpBean().getConn();//Connection Pool 에서 가져오기
 
 			String sql = "SELECT num, writer, title, TO_CHAR(regdate, 'yyyy\"년 \"mm\"월 \"dd\"일 \"HH24:MI:SS') RD FROM board_guest";
 			pstmt = conn.prepareStatement(sql);
@@ -60,7 +60,7 @@ public class BoardDao {
 					rs.close();
 				if (pstmt != null)
 					pstmt.close();
-				// Connection 객체 반납하기
+				// Connection 객체 반납하기(자동으로 오버라이딩이 됨)
 				if (conn != null)
 					conn.close();
 			} catch (Exception e) {
